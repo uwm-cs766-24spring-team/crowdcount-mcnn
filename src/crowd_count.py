@@ -1,5 +1,5 @@
 import torch.nn as nn
-import src.network
+import src.network as network
 from src.models import MCNN
 
 
