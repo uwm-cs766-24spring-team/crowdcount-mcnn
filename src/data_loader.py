@@ -30,20 +30,19 @@ class ImageDataLoader():
                 img = img.astype(np.float32, copy=False)
                 ht = img.shape[0]
                 wd = img.shape[1]
-                ht_1 = int((ht/4)*4)
-                wd_1 = int((wd/4)*4)
-                print(img, ht, wd, ht_1, wd_1)
-                img = cv2.resize(img,(wd_1,ht_1))
+                ht_1 = (ht/4)*4
+                wd_1 = (wd/4)*4
+                img = cv2.resize(img,((int(wd_1),int(ht_1))))
                 img = img.reshape((1,1,img.shape[0],img.shape[1]))
-                den = pd.read_csv(os.path.join(self.gt_path,os.path.splitext(fname)[0] + '.csv'), sep=',',header=None).as_matrix()                        
+                den = pd.read_csv(os.path.join(self.gt_path,os.path.splitext(fname)[0] + '.csv'), sep=',',header=None).values                        
                 den  = den.astype(np.float32, copy=False)
                 if self.gt_downsample:
                     wd_1 = wd_1/4
                     ht_1 = ht_1/4
-                    den = cv2.resize(den,(wd_1,ht_1))                
+                    den = cv2.resize(den,((int(wd_1),int(ht_1))))                
                     den = den * ((wd*ht)/(wd_1*ht_1))
                 else:
-                    den = cv2.resize(den,(wd_1,ht_1))
+                    den = cv2.resize(den,((int(wd_1),int(ht_1))))
                     den = den * ((wd*ht)/(wd_1*ht_1))
                     
                 den = den.reshape((1,1,den.shape[0],den.shape[1]))            
@@ -80,17 +79,17 @@ class ImageDataLoader():
                 wd = img.shape[1]
                 ht_1 = (ht/4)*4
                 wd_1 = (wd/4)*4
-                img = cv2.resize(img,(wd_1,ht_1))
+                img = cv2.resize(img,((int(wd_1),int(ht_1))))
                 img = img.reshape((1,1,img.shape[0],img.shape[1]))
-                den = pd.read_csv(os.path.join(self.gt_path,os.path.splitext(fname)[0] + '.csv'), sep=',',header=None).as_matrix()                        
+                den = pd.read_csv(os.path.join(self.gt_path,os.path.splitext(fname)[0] + '.csv'), sep=',',header=None).values
                 den  = den.astype(np.float32, copy=False)
                 if self.gt_downsample:
                     wd_1 = wd_1/4
                     ht_1 = ht_1/4
-                    den = cv2.resize(den,(wd_1,ht_1))                
+                    den = cv2.resize(den,((int(wd_1),int(ht_1))))                
                     den = den * ((wd*ht)/(wd_1*ht_1))
                 else:
-                    den = cv2.resize(den,(wd_1,ht_1))
+                    den = cv2.resize(den,((int(wd_1),int(ht_1))))
                     den = den * ((wd*ht)/(wd_1*ht_1))
                     
                 den = den.reshape((1,1,den.shape[0],den.shape[1]))            
