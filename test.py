@@ -17,7 +17,7 @@ data_path =  './test_data/images/'
 gt_path = './test_data/ground_truth_csv/'
 model_path = './final_models/mcnn_shtechB_110.h5'
 
-output_dir = './output/'
+output_dir = './test_data/output/'
 model_name = os.path.basename(model_path).split('.')[0]
 file_results = os.path.join(output_dir,'results_' + model_name + '_.txt')
 if not os.path.exists(output_dir):
@@ -51,7 +51,7 @@ for blob in data_loader:
     if vis:
         utils.display_results(im_data, gt_data, density_map)
     if save_output:
-        utils.save_density_map(density_map, output_dir, 'output_' + blob['fname'].split('.')[0] + '.png')
+        utils.save_density_map(im_data, density_map, output_dir, 'output_' + blob['fname'].split('.')[0] + '.png')
         
 mae = mae/data_loader.get_num_samples()
 mse = np.sqrt(mse/data_loader.get_num_samples())
