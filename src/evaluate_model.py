@@ -1,5 +1,5 @@
-from crowd_count import CrowdCounter
-import network
+from src.crowd_count import CrowdCounter
+import src.network
 import numpy as np
 
 
