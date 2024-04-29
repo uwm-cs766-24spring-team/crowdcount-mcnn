@@ -13,7 +13,7 @@ class CrowdCounter(nn.Module):
     def loss(self):
         return self.loss_mse
     
-    def forward(self,  im_data, gt_data=None):        
+    def forward(self, im_data, gt_data=None):        
         im_data = network.np_to_variable(im_data, is_cuda=True, is_training=self.training)                
         density_map = self.DME(im_data)
         

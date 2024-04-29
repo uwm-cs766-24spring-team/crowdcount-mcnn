@@ -34,21 +34,25 @@ class ImageDataLoader():
                 wd_1 = (wd/4)*4
                 img = cv2.resize(img,((int(wd_1),int(ht_1))))
                 img = img.reshape((1,1,img.shape[0],img.shape[1]))
-                den = pd.read_csv(os.path.join(self.gt_path,os.path.splitext(fname)[0] + '.csv'), sep=',',header=None).values                        
-                den  = den.astype(np.float32, copy=False)
+                if self.gt_path is not None:
+                    den = pd.read_csv(os.path.join(self.gt_path,os.path.splitext(fname)[0] + '.csv'), sep=',',header=None).values                        
+                    den  = den.astype(np.float32, copy=False)
                 if self.gt_downsample:
                     wd_1 = wd_1/4
                     ht_1 = ht_1/4
-                    den = cv2.resize(den,((int(wd_1),int(ht_1))))                
-                    den = den * ((wd*ht)/(wd_1*ht_1))
+                    if self.gt_path is not None:
+                        den = cv2.resize(den,((int(wd_1),int(ht_1))))                
+                        den = den * ((wd*ht)/(wd_1*ht_1))
                 else:
-                    den = cv2.resize(den,((int(wd_1),int(ht_1))))
-                    den = den * ((wd*ht)/(wd_1*ht_1))
-                    
-                den = den.reshape((1,1,den.shape[0],den.shape[1]))            
+                    if self.gt_path is not None:
+                        den = cv2.resize(den,((int(wd_1),int(ht_1))))
+                        den = den * ((wd*ht)/(wd_1*ht_1))
+                                
                 blob = {}
                 blob['data']=img
-                blob['gt_density']=den
+                if self.gt_path is not None:
+                    den = den.reshape((1,1,den.shape[0],den.shape[1]))
+                    blob['gt_density']=den
                 blob['fname'] = fname
                 self.blob_list[idx] = blob
                 idx = idx+1
@@ -81,21 +85,25 @@ class ImageDataLoader():
                 wd_1 = (wd/4)*4
                 img = cv2.resize(img,((int(wd_1),int(ht_1))))
                 img = img.reshape((1,1,img.shape[0],img.shape[1]))
-                den = pd.read_csv(os.path.join(self.gt_path,os.path.splitext(fname)[0] + '.csv'), sep=',',header=None).values
-                den  = den.astype(np.float32, copy=False)
+                if self.gt_path is not None:
+                    den = pd.read_csv(os.path.join(self.gt_path,os.path.splitext(fname)[0] + '.csv'), sep=',',header=None).values
+                    den  = den.astype(np.float32, copy=False)
                 if self.gt_downsample:
                     wd_1 = wd_1/4
                     ht_1 = ht_1/4
-                    den = cv2.resize(den,((int(wd_1),int(ht_1))))                
-                    den = den * ((wd*ht)/(wd_1*ht_1))
+                    if self.gt_path is not None:
+                        den = cv2.resize(den,((int(wd_1),int(ht_1))))                
+                        den = den * ((wd*ht)/(wd_1*ht_1))
                 else:
-                    den = cv2.resize(den,((int(wd_1),int(ht_1))))
-                    den = den * ((wd*ht)/(wd_1*ht_1))
-                    
-                den = den.reshape((1,1,den.shape[0],den.shape[1]))            
+                    if self.gt_path is not None:
+                        den = cv2.resize(den,((int(wd_1),int(ht_1))))
+                        den = den * ((wd*ht)/(wd_1*ht_1))
+                            
                 blob = {}
                 blob['data']=img
-                blob['gt_density']=den
+                if self.gt_path is not None:
+                    den = den.reshape((1,1,den.shape[0],den.shape[1]))
+                    blob['gt_density']=den
                 blob['fname'] = fname
                 
             yield blob
